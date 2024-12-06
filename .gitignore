@@ -1,0 +1,17 @@
+.DS_Store
+*.cache
+*.lock
+*.pages
+*.pyc
+
+# virtualenv
+/.ven/
+
+# pycharm
+/.idea/
+/__pycache__/
+
+# vscode
+.vscode
+*.code-workspace
+.history
