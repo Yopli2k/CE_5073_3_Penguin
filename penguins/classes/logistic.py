@@ -14,8 +14,11 @@ class LogisticModel(BaseModel):
 
     def predict(self, features):
         data = self._preprocess(features)
-        probability = self._model.predict_proba(data)[:, 1]
+        prediction = self._model.predict(data)[0]
+        species = self._species_name(self._model.classes_[prediction])  # Get the species name
+        probability = self._model.predict_proba(data)[0, prediction]
         return {
-            "prediction": bool(probability[0] >= 0.5),
-            "probability": float(probability[0]),
+            "species": species,
+            "probability": float(probability),
+            "percentage": round(probability * 100, 3),
         }

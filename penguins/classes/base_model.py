@@ -11,6 +11,7 @@ class BaseModel(ABC):
         self.file_name = file_name
         self.categorical_cols = ["island", "sex"]
         self.numerical_cols = ["culmen_length_mm", "culmen_depth_mm", "flipper_length_mm", "body_mass_g"]
+        self.species_names = ["Adelie", "Chinstrap", "Gentoo"]
         self._model = None
         self._scaler = None
         self._vectorizer = None
@@ -22,7 +23,6 @@ class BaseModel(ABC):
     @abstractmethod
     def predict(self, features):
         pass
-
 
     """
     Preprocess the features data to be used for prediction.
@@ -38,6 +38,12 @@ class BaseModel(ABC):
         vectorized_data = self._vectorizer.transform([categorical_data])
         scaled_data = self._scaler.transform([numerical_data])
         return np.hstack((scaled_data, vectorized_data))
+
+    """
+      Return the corresponding species name.
+    """
+    def _species_name(self, index):
+        return self.species_names[index]
 
     """
     Load the model, scaler and vectorizer from disk if it is not loaded.

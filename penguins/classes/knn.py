@@ -13,8 +13,10 @@ class KNNModel(BaseModel):
 
     def predict(self, features):
         data = self._preprocess(features)
-        prediction = self._model.predict(data)[0]  # Predicción directa
+        prediction = self._model.predict(data)[0]
+        species = self._species_name(self._model.classes_[prediction])  # Get the species name
         return {
-            "prediction": bool(prediction),
-            "probability": None  # Don't exist probability for K-NN
+            "species": species,
+            "probability": 1,  # Don't exist probability for K-Nearest Neighbors
+            "percentage": 100.000,
         }
